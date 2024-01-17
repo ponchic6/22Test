@@ -1,7 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
-public interface IInputService
+namespace Services
 {
-    public event Action<Vector3> OnSwipe;
+    public interface IInputService
+    {
+        public event Action<Vector3> OnSwipe;
+    }
 }

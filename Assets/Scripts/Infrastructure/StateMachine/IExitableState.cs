@@ -1,4 +1,7 @@
-﻿public interface IExitableState
+﻿namespace Infrastructure.StateMachine
 {
-    public void Exit();
+    public interface IExitableState
+    {
+        public void Exit();
+    }
 }

@@ -2,9 +2,9 @@
 
 namespace Monobehavior
 {
-    public interface IMenuButtonsHandler
+    public interface IRestartButtonHandler
     {
         public void Constructor(GameStateMachine gameStateMachine);
-        public void LoadLevel(string levelName);
+        public void RestartGame();
     }
 }

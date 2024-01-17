@@ -1,27 +1,28 @@
-﻿using Zenject;
-
-public class BootstrapState : IState
+﻿namespace Infrastructure.StateMachine
 {
-    private const string Initial = "Initial";
-    private readonly GameStateMachine _stateMachine;
-    private readonly SceneLoader _sceneLoader;
-    public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader)
+    public class BootstrapState : IState
     {
-        _stateMachine = stateMachine;
-        _sceneLoader = sceneLoader;
-    }
-    public void Enter()
-    {
-        _sceneLoader.Load(Initial, EnterLoadMainMenu);
-    }
+        private const string Initial = "Initial";
+        private readonly GameStateMachine _stateMachine;
+        private readonly SceneLoader _sceneLoader;
+        public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader)
+        {
+            _stateMachine = stateMachine;
+            _sceneLoader = sceneLoader;
+        }
+        public void Enter()
+        {
+            _sceneLoader.Load(Initial, EnterLoadMainMenu);
+        }
 
-    public void Exit()
-    {
+        public void Exit()
+        {
         
-    }
+        }
 
-    private void EnterLoadMainMenu()
-    {
-        _stateMachine.Enter<LoadMainMenuState>();
+        private void EnterLoadMainMenu()
+        {
+            _stateMachine.Enter<LoadMainMenuState>();
+        }
     }
 }

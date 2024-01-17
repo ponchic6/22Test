@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 
-public interface ITractorFactory
+namespace Factories
 {
-    public void CreateTractor();
-    public void DestroyTractor();
-    public Transform GetTractor();
+    public interface ITractorFactory
+    {
+        public void CreateTractor();
+        public void DestroyTractor();
+        public Transform GetTractor();
+    }
 }

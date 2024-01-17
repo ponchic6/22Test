@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 
-public class TractorMover : MonoBehaviour
+namespace Monobehavior
 {
-    [SerializeField] private float _speed;
-
-    private void Update()
+    public class TractorMover : MonoBehaviour
     {
-        transform.position += Time.deltaTime * _speed * transform.forward;
+        [SerializeField] private float _speed;
+
+        private void Update()
+        {
+            transform.position += Time.deltaTime * _speed * transform.forward;
+        }
     }
 }

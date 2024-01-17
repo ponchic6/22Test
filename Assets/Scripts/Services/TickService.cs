@@ -1,12 +1,16 @@
-﻿using System;using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class TickService : MonoBehaviour, ITickService
+namespace Services
 {
-    public event Action OnTick;
-    public event Action OnFixedTick;
-    public event Action OnLateTick;
+    public class TickService : MonoBehaviour, ITickService
+    {
+        public event Action OnTick;
+        public event Action OnFixedTick;
+        public event Action OnLateTick;
 
-    private void Update() => OnTick?.Invoke();
-    private void FixedUpdate() => OnFixedTick?.Invoke();
-    private void LateUpdate() => OnLateTick?.Invoke();
+        private void Update() => OnTick?.Invoke();
+        private void FixedUpdate() => OnFixedTick?.Invoke();
+        private void LateUpdate() => OnLateTick?.Invoke();
+    }
 }

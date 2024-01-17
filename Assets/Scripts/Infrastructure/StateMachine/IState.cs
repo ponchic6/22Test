@@ -1,4 +1,7 @@
-﻿public interface IState : IExitableState
+﻿namespace Infrastructure.StateMachine
 {
-    public void Enter();
+    public interface IState : IExitableState
+    {
+        public void Enter();
+    }
 }

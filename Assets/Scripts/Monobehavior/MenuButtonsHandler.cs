@@ -1,15 +1,20 @@
-﻿using UnityEngine;
-public class MenuButtonsHandler : MonoBehaviour, IMenuButtonsHandler
+﻿using Infrastructure.StateMachine;
+using UnityEngine;
+
+namespace Monobehavior
 {
-    private GameStateMachine _gameStateMachine;
-    
-    public void Constructor(GameStateMachine gameStateMachine)
+    public class MenuButtonsHandler : MonoBehaviour, IMenuButtonsHandler
     {
-        _gameStateMachine = gameStateMachine;
-    }
+        private GameStateMachine _gameStateMachine;
     
-    public void LoadLevel(string levelName)
-    {
-        _gameStateMachine.Enter<LoadLevelState, string>(levelName);
+        public void Constructor(GameStateMachine gameStateMachine)
+        {
+            _gameStateMachine = gameStateMachine;
+        }
+    
+        public void LoadLevel(string levelName)
+        {
+            _gameStateMachine.Enter<LoadLevelState, string>(levelName);
+        }
     }
 }

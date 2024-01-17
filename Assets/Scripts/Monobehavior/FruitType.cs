@@ -1,10 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+using Enums;
 using UnityEngine;
 
-public class FruitType : MonoBehaviour
+namespace Monobehavior
 {
-    [SerializeField] private FruitsEnum _type;
+    public class FruitType : MonoBehaviour
+    {
+        [SerializeField] private FruitsEnum _type;
 
-    public FruitsEnum GetFruitType => _type;
+        public FruitsEnum GetFruitType => _type;
+    }
 }

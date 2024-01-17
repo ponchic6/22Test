@@ -1,6 +1,10 @@
-﻿using UnityEngine;
+﻿using Monobehavior;
+using UnityEngine;
 
-public interface IFruitFactory
+namespace Factories
 {
-    public FruitCollidDetector CreateFruit(Vector3Int vector);
+    public interface IFruitFactory
+    {
+        public IFruitCollidDetector CreateFruit(Vector3Int vector);
+    }
 }

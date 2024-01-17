@@ -1,11 +1,14 @@
 using Zenject;
-    
-public class Game 
-{
-    public GameStateMachine StateMachine;
 
-    public Game(ICoroutineRunner coroutineRunner, DiContainer diContainer)
+namespace Infrastructure.StateMachine
+{
+    public class Game 
     {
-        StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), diContainer);
+        public GameStateMachine StateMachine;
+
+        public Game(ICoroutineRunner coroutineRunner, DiContainer diContainer)
+        {
+            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), diContainer);
+        }
     }
 }

@@ -1,44 +1,50 @@
 using System;
+using Enums;
+using Factories;
+using Services;
 using UnityEngine;
 using Zenject;
 
-public class FruitChecker : MonoBehaviour, IFruitChecker
+namespace Monobehavior
 {
-    public event Action<bool> OnCheckFruitType;
-    
-    private ILevelFruitCreator _levelFruitCreator;
-    private IUIHandlerFactory _uiHandlerFactory;
-
-    [Inject]
-    public void Constructor(ILevelFruitCreator levelFruitCreator, IUIHandlerFactory uiHandlerFactory)
+    public class FruitChecker : MonoBehaviour, IFruitChecker
     {
-        _levelFruitCreator = levelFruitCreator;
-        _uiHandlerFactory = uiHandlerFactory;
-
-        SubscribeOnCollision();
-    }
+        public event Action<bool> OnCheckFruitType;
     
-    private void SubscribeOnCollision()
-    {
-        foreach (var fruitKetValuePair in _levelFruitCreator.GetFruitDictionary())
+        private ILevelFruitCreator _levelFruitCreator;
+        private IUIHandlerFactory _uiHandlerFactory;
+
+        [Inject]
+        public void Constructor(ILevelFruitCreator levelFruitCreator, IUIHandlerFactory uiHandlerFactory)
         {
-            fruitKetValuePair.Value.OnCollision += CheckCorrectBasket;
+            _levelFruitCreator = levelFruitCreator;
+            _uiHandlerFactory = uiHandlerFactory;
+
+            SubscribeOnCollisionWithFruit();
         }
-    }
-
-    private void CheckCorrectBasket(GameObject fruit)
-    {
-        FruitsEnum fruitType = fruit.GetComponent<FruitType>().GetFruitType;
-        FruitsEnum basketType = _uiHandlerFactory.FruitButtonsHandler.GetSelectedBasket();
-
-        if (fruitType == basketType)
+    
+        private void SubscribeOnCollisionWithFruit()
         {
-            OnCheckFruitType?.Invoke(true);
+            foreach (var fruitKetValuePair in _levelFruitCreator.GetFruitDictionary())
+            {
+                fruitKetValuePair.Value.OnCollision += CheckCorrectBasket;
+            }
         }
 
-        else
+        private void CheckCorrectBasket(GameObject fruit)
         {
-            OnCheckFruitType?.Invoke(false);
+            FruitsEnum fruitType = fruit.GetComponent<FruitType>().GetFruitType;
+            FruitsEnum basketType = _uiHandlerFactory.FruitBasketButtonsHandler.GetSelectedBasket();
+
+            if (fruitType == basketType)
+            {
+                OnCheckFruitType?.Invoke(true);
+            }
+
+            else
+            {
+                OnCheckFruitType?.Invoke(false);
+            }
         }
     }
 }

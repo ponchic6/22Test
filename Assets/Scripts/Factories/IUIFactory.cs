@@ -1,18 +1,23 @@
-﻿using UnityEngine;
+﻿using Infrastructure.StateMachine;
+using UnityEngine;
 
-public interface IUIFactory
+namespace Factories
 {
-    public Transform CreateCanvas();
-    public Transform CreateCurrentLevelText();
-    public Transform CreateTimer();
-    public Transform CreateFruitProgrerss();
-    public Transform CreateFruitButtons();
-    public Transform CreateLossDisplay();
-    public Transform CreateMenuPanel(GameStateMachine gameStateMachine);
-    public Transform RootCanvas { get; }
-    public Transform CurrentLevelText { get; }
-    public Transform Timer { get; }
-    public Transform FruitProgress { get; }
-    public Transform FruitButtons { get; }
-    public Transform MenuPanel { get; }
+    public interface IUIFactory
+    {
+        public void SetGameStateMachine(GameStateMachine gameStateMachine);
+        public void CreateCanvas();
+        public void CreateCurrentLevelText();
+        public void CreateTimer();
+        public void CreateFruitProgrerss();
+        public void CreateFruitButtons();
+        public void CreateLossDisplay();
+        public void CreateMenuPanel();
+        public Transform RootCanvas { get; }
+        public Transform CurrentLevelText { get; }
+        public Transform Timer { get; }
+        public Transform FruitProgress { get; }
+        public Transform FruitButtons { get; }
+        public Transform MenuPanel { get; }                         
+    }
 }

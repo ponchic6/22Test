@@ -1,76 +1,79 @@
 using System;
 using UnityEngine;
 
-public class InputService : IInputService
+namespace Services
 {
-    public event Action<Vector3> OnSwipe;
+    public class InputService : IInputService
+    {
+        public event Action<Vector3> OnSwipe;
 
-    private const float Eps = 10;
+        private const float Eps = 10;
         
-    private bool _canSwipe;
-    private Vector3 _startMousePos;
+        private bool _canSwipe;
+        private Vector3 _startMousePos;
 
-    public InputService(ITickService tickService)
-    {
-        tickService.OnTick += CheckSwipe;
-        tickService.OnTick += CheckTouch;
-    }
-
-    private void CheckTouch()
-    {
-        if (Input.GetMouseButtonDown(0))
+        public InputService(ITickService tickService)
         {
-            _canSwipe = true;
-            _startMousePos = Input.mousePosition;
+            tickService.OnTick += CheckSwipe;
+            tickService.OnTick += CheckTouch;
         }
 
-        if (Input.GetMouseButtonUp(0))
+        private void CheckTouch()
         {
-            _canSwipe = false;
+            if (Input.GetMouseButtonDown(0))
+            {
+                _canSwipe = true;
+                _startMousePos = Input.mousePosition;
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                _canSwipe = false;
+            }
         }
-    }
 
-    private void CheckSwipe()
-    {
-        if (_canSwipe && Vector3.Distance(Input.mousePosition, _startMousePos) > Eps)
+        private void CheckSwipe()
         {
-            _canSwipe = false;
-            Vector3 direction = Input.mousePosition - _startMousePos;
+            if (_canSwipe && Vector3.Distance(Input.mousePosition, _startMousePos) > Eps)
+            {
+                _canSwipe = false;
+                Vector3 direction = Input.mousePosition - _startMousePos;
 
-            direction = ToRoundVector3(direction);
+                direction = ToRoundVector3(direction);
                 
-            OnSwipe?.Invoke(direction);
+                OnSwipe?.Invoke(direction);
+            }
         }
-    }
 
-    private Vector3 ToRoundVector3(Vector3 direction)
-    {
-        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+        private Vector3 ToRoundVector3(Vector3 direction)
         {
-            if (direction.x > 0)
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
             {
-                direction = Vector3.right;
+                if (direction.x > 0)
+                {
+                    direction = Vector3.right;
+                }
+
+                else
+                {
+                    direction = Vector3.left;
+                }
             }
 
             else
             {
-                direction = Vector3.left;
+                if (direction.y > 0)
+                {
+                    direction = Vector3.forward;
+                }
+
+                else
+                {
+                    direction = Vector3.back;
+                }
             }
+
+            return direction;
         }
-
-        else
-        {
-            if (direction.y > 0)
-            {
-                direction = Vector3.forward;
-            }
-
-            else
-            {
-                direction = Vector3.back;
-            }
-        }
-
-        return direction;
     }
 }

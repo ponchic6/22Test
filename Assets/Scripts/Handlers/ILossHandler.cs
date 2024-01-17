@@ -1,5 +1,9 @@
-﻿public interface ILossHandler
+﻿namespace Handlers
 {
-    public void SubscribeOnTimeOver();
-    public void SubscribeOnIncorrrectChooseOfBasket();
+    public interface ILossHandler
+    {
+        public void SubscribeOnTimeOver();
+        public void SubscribeOnIncorrectChooseOfBasket();
+        public void UpdateLossStatus();
+    }
 }

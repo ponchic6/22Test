@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-public interface ITractorDirectionChanger
+namespace Monobehavior
 {
-    public void ChangeDirectionMove(Vector3 direction);
+    public interface ITractorDirectionChanger
+    {
+        public void ChangeDirectionMove(Vector3 direction);
+    }
 }

@@ -1,8 +1,13 @@
 ﻿using System.Collections.Generic;
+using Monobehavior;
 using UnityEngine;
 
-public interface ILevelFruitCreator
+namespace Services
 {
-    public Dictionary<Vector3Int, FruitCollidDetector> GetFruitDictionary();
-    public void InitializeFruits();
+    public interface ILevelFruitCreator
+    {
+        public Dictionary<Vector3Int, IFruitCollidDetector> GetFruitDictionary();
+        public void InitializeFruitsOnLevel();
+        public void ClearDictionary();
+    }
 }

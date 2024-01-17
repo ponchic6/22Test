@@ -1,5 +1,8 @@
-﻿public enum FruitsEnum
+﻿namespace Enums
 {
-    Apple,
-    Tomato
+    public enum FruitsEnum
+    {
+        Apple,
+        Tomato
+    }
 }

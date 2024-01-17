@@ -1,31 +1,35 @@
-﻿using UnityEngine;
+﻿using Factories;
 
-public class LoadMainMenuState : IState
+namespace Infrastructure.StateMachine
 {
-    private const string MainMenu = "MainMenu"; 
+    public class LoadMainMenuState : IState
+    {
+        private const string MainMenu = "MainMenu"; 
     
-    private readonly GameStateMachine _gameStateMachine;
-    private readonly SceneLoader _sceneLoader;
-    private readonly IUIFactory _uiFactory;
+        private readonly GameStateMachine _gameStateMachine;
+        private readonly SceneLoader _sceneLoader;
+        private readonly IUIFactory _uiFactory;
 
-    public LoadMainMenuState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, IUIFactory uiFactory)
-    {
-        _gameStateMachine = gameStateMachine;
-        _sceneLoader = sceneLoader;
-        _uiFactory = uiFactory;
-    }
+        public LoadMainMenuState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, IUIFactory uiFactory)
+        {
+            _gameStateMachine = gameStateMachine;
+            _sceneLoader = sceneLoader;
+            _uiFactory = uiFactory;
+        }
 
-    public void Enter() =>
-        _sceneLoader.Load(MainMenu, OnLoaded);
+        public void Enter() =>
+            _sceneLoader.Load(MainMenu, OnLoaded);
 
-    public void Exit()
-    {
+        public void Exit()
+        {
         
-    }
+        }
 
-    private void OnLoaded()
-    {
-        _uiFactory.CreateCanvas();
-        _uiFactory.CreateMenuPanel(_gameStateMachine);
+        private void OnLoaded()
+        {
+            _uiFactory.SetGameStateMachine(_gameStateMachine);
+            _uiFactory.CreateCanvas();
+            _uiFactory.CreateMenuPanel();
+        }
     }
 }

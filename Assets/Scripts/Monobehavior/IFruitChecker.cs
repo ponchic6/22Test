@@ -1,6 +1,9 @@
 ﻿using System;
 
-public interface IFruitChecker
+namespace Monobehavior
 {
-    public event Action<bool> OnCheckFruitType;
+    public interface IFruitChecker
+    {
+        public event Action<bool> OnCheckFruitType;
+    }
 }

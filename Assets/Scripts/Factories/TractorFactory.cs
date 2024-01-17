@@ -1,32 +1,36 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class TractorFactory : ITractorFactory
+namespace Factories
 {
-    private const string TractorPath = "Tractor/TractorPrefab";
-    
-    private readonly DiContainer _diContainer;
-
-    private GameObject _tractor;
-    
-    public TractorFactory(DiContainer diContainer)
+    public class TractorFactory : ITractorFactory
     {
-        _diContainer = diContainer;
-    }
+        private const string TractorPath = "Tractor/TractorPrefab";
     
-    public void CreateTractor()
-    {   
-        if (_tractor == null)
-            _tractor = _diContainer.InstantiatePrefabResource(TractorPath);
-    }
+        private readonly DiContainer _diContainer;
 
-    public void DestroyTractor()
-    {
-        Object.Destroy(_tractor);
-    }
+        private GameObject _tractor;
+    
+        public TractorFactory(DiContainer diContainer)
+        {
+            _diContainer = diContainer;
+        }
+    
+        public void CreateTractor()
+        {   
+            if (_tractor == null)
+                _tractor = _diContainer.InstantiatePrefabResource(TractorPath);
+        }
 
-    public Transform GetTractor()
-    {
-        return _tractor.transform;
+        public void DestroyTractor()
+        {   
+            if (_tractor != null)
+                Object.Destroy(_tractor);
+        }
+
+        public Transform GetTractor()
+        {
+            return _tractor.transform;
+        }
     }
 }

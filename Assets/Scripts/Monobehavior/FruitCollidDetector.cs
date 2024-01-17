@@ -1,13 +1,21 @@
 using System;
 using UnityEngine;
 
-public class FruitCollidDetector : MonoBehaviour
+namespace Monobehavior
 {
-    public event Action<GameObject> OnCollision;
-    
-    private void OnTriggerEnter(Collider other)
+    public class FruitCollidDetector : MonoBehaviour, IFruitCollidDetector
     {
-        OnCollision?.Invoke(gameObject);
-        Destroy(gameObject);
+        public event Action<GameObject> OnCollision;
+
+        private void OnTriggerEnter(Collider other)
+        {
+            OnCollision?.Invoke(gameObject);
+            Destroy(gameObject);
+        }
+
+        public void SetFruitPos(Vector3Int vector3Int)
+        {
+            transform.position = vector3Int;
+        }
     }
 }
