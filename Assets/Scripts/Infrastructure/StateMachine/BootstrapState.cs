@@ -12,7 +12,7 @@ public class BootstrapState : IState
     }
     public void Enter()
     {
-        _sceneLoader.Load(Initial, EnterLoadLevel);
+        _sceneLoader.Load(Initial, EnterLoadMainMenu);
     }
 
     public void Exit()
@@ -20,6 +20,8 @@ public class BootstrapState : IState
         
     }
 
-    private void EnterLoadLevel() 
-        => _stateMachine.Enter<LoadLevelState, string>("Level");
+    private void EnterLoadMainMenu()
+    {
+        _stateMachine.Enter<LoadMainMenuState>();
+    }
 }

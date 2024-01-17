@@ -12,9 +12,9 @@ public class FruitFactory : IFruitFactory
         _diContainer = diContainer;
     }
     
-    public FruitCollider CreateFruit(Vector3Int vector)
+    public FruitCollidDetector CreateFruit(Vector3Int vector)
     {
-        FruitCollider fruit = _diContainer.InstantiatePrefabResourceForComponent<FruitCollider>(FruitPath);
+        FruitCollidDetector fruit = _diContainer.InstantiatePrefabResourceForComponent<FruitCollidDetector>(FruitPath);
         fruit.transform.position = vector;
         return fruit;
     }

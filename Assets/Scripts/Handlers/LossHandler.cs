@@ -12,9 +12,20 @@ public class LossHandler : ILossHandler
         _tractorFactory = tractorFactory;
     }
 
-    public void Initialize()
+    public void SubscribeOnTimeOver()
     {
         _uiFactory.Timer.GetComponent<Timer>().OnTimeOver += ToLose;
+    }
+
+    public void SubscribeOnIncorrrectChooseOfBasket()
+    {
+        _tractorFactory.GetTractor().GetComponent<IFruitChecker>().OnCheckFruitType += TryToLose;
+    }
+
+    private void TryToLose(bool obj)
+    {
+        if (obj == false)
+            ToLose();
     }
 
     private void ToLose()

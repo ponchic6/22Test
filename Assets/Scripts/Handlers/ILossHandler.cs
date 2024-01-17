@@ -1,4 +1,5 @@
 ﻿public interface ILossHandler
 {
-    public void Initialize();
+    public void SubscribeOnTimeOver();
+    public void SubscribeOnIncorrrectChooseOfBasket();
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public class UIFactory : IUIFactory
@@ -9,8 +10,13 @@ public class UIFactory : IUIFactory
     private const string FruitProgressPath = "UIEllements/UIPrefabs/FruitProgress";
     private const string FruitButtonsPath = "UIEllements/UIPrefabs/FruitButtons";
     private const string LossDisplayPath = "UIEllements/UIPrefabs/LossDispalyRoot";
+    private const string MenuPanelPath = "UIEllements/UIPrefabs/MenuPanel";
     
     private readonly DiContainer _diContainer;
+    private readonly IUIHandlerFactory _uiHandlerFactory;
+
+    private IMenuButtonsHandler _menuButtonsHandler;
+    private IFruitButtonsHandler _fruitButtonsHandler;
 
     private Transform _rootCanvas;
     private Transform _currentLevelText;
@@ -18,6 +24,7 @@ public class UIFactory : IUIFactory
     private Transform _fruitProgress;
     private Transform _fruitButtons;
     private Transform _lossDisplay;
+    private Transform _menuPanel;
 
     public Transform RootCanvas => _rootCanvas;
     public Transform CurrentLevelText => _currentLevelText;
@@ -25,12 +32,13 @@ public class UIFactory : IUIFactory
     public Transform FruitProgress => _fruitProgress;
     public Transform FruitButtons => _fruitButtons;
     public Transform LossDisplay => _lossDisplay;
+    public Transform MenuPanel => _menuPanel;
 
-    public UIFactory(DiContainer diContainer)
-    {
-        _diContainer = diContainer;
+    public UIFactory(DiContainer diContainer, IUIHandlerFactory uiHandlerFactory)
+    {_diContainer = diContainer;
+        _uiHandlerFactory = uiHandlerFactory;
     }
-    
+
     public Transform CreateCanvas()
     {
         Transform rootCanvas = Resources.Load<GameObject>(CanvasPath).transform;
@@ -61,15 +69,46 @@ public class UIFactory : IUIFactory
 
     public Transform CreateFruitButtons()
     {
-        Transform fruitButtons = Resources.Load<GameObject>(FruitButtonsPath).transform;
-        _fruitButtons = Object.Instantiate(fruitButtons, _rootCanvas);
+        _fruitButtons = _diContainer.InstantiatePrefabResource(FruitButtonsPath, _rootCanvas).transform;
+        _fruitButtonsHandler = _uiHandlerFactory.CreateFruitButtonsHandler(_fruitButtons);
+        BindFruitButton(_fruitButtons.GetChild(0));
+        BindFruitButton(_fruitButtons.GetChild(1));
         return _fruitButtons;
     }
 
     public Transform CreateLossDisplay()
     {
         Transform lossDisplay = Resources.Load<GameObject>(LossDisplayPath).transform;
-        _lossDisplay = Object.Instantiate(lossDisplay, _rootCanvas);
+        
+        if (_lossDisplay == null)
+            _lossDisplay = Object.Instantiate(lossDisplay, _rootCanvas);
+        
         return _lossDisplay;
+    }
+
+    public Transform CreateMenuPanel(GameStateMachine gameStateMachine)
+    {
+        _menuPanel = _diContainer.InstantiatePrefabResource(MenuPanelPath, _rootCanvas).transform;
+        _menuButtonsHandler = _uiHandlerFactory.CreateMenuButtonsHandler(_menuPanel, gameStateMachine);
+        BindMenuButton(_menuPanel.GetChild(0), "Level 1");
+        BindMenuButton(_menuPanel.GetChild(1), "Level 2");
+        BindMenuButton(_menuPanel.GetChild(2), "Level 3");
+        return _lossDisplay;
+    }
+
+    private void BindMenuButton(Transform levelMenuButton, string levelName)
+    {
+        levelMenuButton
+            .GetComponent<Button>()
+            .onClick
+            .AddListener(() => { _menuButtonsHandler.LoadLevel(levelName); });
+    }
+
+    private void BindFruitButton(Transform fruitButton)
+    {
+        fruitButton
+            .GetComponent<Button>()
+            .onClick
+            .AddListener(() => { _fruitButtonsHandler.SelectFruitBasket(fruitButton); });
     }
 }

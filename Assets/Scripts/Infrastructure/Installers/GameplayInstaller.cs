@@ -8,10 +8,17 @@ public class GameplayInstaller : MonoInstaller
         RegisterTickService();
         RegisterInputService();
         RegisterTractorFactories();
+        RegisterUIHandlerFactory();
         RegisterUIFactory();
         RegisterLossHandler();
         RegisterFruitFactory();
         RegisterLevelFruitCreator();
+    }
+
+    private void RegisterUIHandlerFactory()
+    {
+        IUIHandlerFactory uiHandlerFactory = Container.Instantiate<UIHandlerFactory>();
+        Container.Bind<IUIHandlerFactory>().FromInstance(uiHandlerFactory).AsSingle();
     }
 
     private void RegisterLevelFruitCreator()

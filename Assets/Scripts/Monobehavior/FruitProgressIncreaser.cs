@@ -17,7 +17,7 @@ public class FruitProgressIncreaser : MonoBehaviour
         SubscribeOnCollision();
     }
 
-    private void IncreaseFruitScore()
+    private void IncreaseFruitScore(GameObject fruit)
     {
         _currentCount++;
         _text.text = _currentCount + "/" + _maxFruitsCount;

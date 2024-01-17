@@ -2,5 +2,5 @@
 
 public interface IFruitFactory
 {
-    public FruitCollider CreateFruit(Vector3Int vector);
+    public FruitCollidDetector CreateFruit(Vector3Int vector);
 }

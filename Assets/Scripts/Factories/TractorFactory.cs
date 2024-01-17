@@ -15,12 +15,18 @@ public class TractorFactory : ITractorFactory
     }
     
     public void CreateTractor()
-    {
-        _tractor = _diContainer.InstantiatePrefabResource(TractorPath);
+    {   
+        if (_tractor == null)
+            _tractor = _diContainer.InstantiatePrefabResource(TractorPath);
     }
 
     public void DestroyTractor()
     {
         Object.Destroy(_tractor);
+    }
+
+    public Transform GetTractor()
+    {
+        return _tractor.transform;
     }
 }

@@ -24,13 +24,14 @@ public class LoadLevelState : IPayLoadState<string>
 
     private void OnLoaded()
     {
-        _tractorFactory.CreateTractor();
         _levelFruitCreator.InitializeFruits();
+        _tractorFactory.CreateTractor();
         _uiFactory.CreateCanvas();
         _uiFactory.CreateTimer();
         _uiFactory.CreateFruitProgrerss();
         _uiFactory.CreateCurrentLevelText();
         _uiFactory.CreateFruitButtons();
-        _lossHandler.Initialize();
+        _lossHandler.SubscribeOnTimeOver();
+        _lossHandler.SubscribeOnIncorrrectChooseOfBasket();
     }
 }

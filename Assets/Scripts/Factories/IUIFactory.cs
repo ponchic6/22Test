@@ -8,9 +8,11 @@ public interface IUIFactory
     public Transform CreateFruitProgrerss();
     public Transform CreateFruitButtons();
     public Transform CreateLossDisplay();
+    public Transform CreateMenuPanel(GameStateMachine gameStateMachine);
     public Transform RootCanvas { get; }
     public Transform CurrentLevelText { get; }
     public Transform Timer { get; }
     public Transform FruitProgress { get; }
     public Transform FruitButtons { get; }
+    public Transform MenuPanel { get; }
 }

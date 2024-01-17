@@ -15,6 +15,9 @@ public class GameStateMachine
         
         _states[typeof(LoadLevelState)] = diContainer.
             Instantiate<LoadLevelState>(new object[] {sceneLoader});
+
+        _states[typeof(LoadMainMenuState)] = diContainer.
+            Instantiate<LoadMainMenuState>(new object[] {this, sceneLoader });
     }
     
     public void Enter<TState>() where TState : class, IState
