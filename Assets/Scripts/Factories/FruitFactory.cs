@@ -1,4 +1,5 @@
-﻿using Monobehavior;
+﻿using Enums;
+using Monobehavior;
 using UnityEngine;
 using Zenject;
 
@@ -6,7 +7,8 @@ namespace Factories
 {
     public class FruitFactory : IFruitFactory
     {   
-        private const string FruitPath = "Fruits/Apple";
+        private const string ApplePath = "Fruits/Apple";
+        private const string TomatoPath = "Fruits/Tomatos";
     
         private readonly DiContainer _diContainer;
 
@@ -15,11 +17,24 @@ namespace Factories
             _diContainer = diContainer;
         }
     
-        public IFruitCollidDetector CreateFruit(Vector3Int vector)
+        public IFruitCollidDetector CreateFruit(Vector3Int vector, FruitsEnum fruit)
         {
-            IFruitCollidDetector fruit = _diContainer.InstantiatePrefabResourceForComponent<IFruitCollidDetector>(FruitPath);
-            fruit.SetFruitPos(vector);
-            return fruit;
+            IFruitCollidDetector fruitClone = null;
+            
+            switch (fruit)
+            {
+                case FruitsEnum.Apple:
+                    fruitClone = _diContainer.InstantiatePrefabResourceForComponent<IFruitCollidDetector>(ApplePath);
+                    fruitClone.SetFruitPos(vector);
+                    break;
+                
+                case FruitsEnum.Tomato:
+                    fruitClone = _diContainer.InstantiatePrefabResourceForComponent<IFruitCollidDetector>(TomatoPath);
+                    fruitClone.SetFruitPos(vector);
+                    break;
+            }
+            
+            return fruitClone;
         }
     }
 }

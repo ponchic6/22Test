@@ -31,7 +31,7 @@ namespace Factories
             _restartButtonHandler =
                 _diContainer.InstantiatePrefabResourceForComponent<IRestartButtonHandler>(RestartButtonHanderPath, parent);
             
-            _restartButtonHandler.Constructor(gameStateMachine);
+            _restartButtonHandler.SetGameStateMachine(gameStateMachine);
             return _restartButtonHandler;
         }
 

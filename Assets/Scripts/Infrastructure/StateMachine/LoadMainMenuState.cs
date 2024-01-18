@@ -30,6 +30,7 @@ namespace Infrastructure.StateMachine
             _uiFactory.SetGameStateMachine(_gameStateMachine);
             _uiFactory.CreateCanvas();
             _uiFactory.CreateMenuPanel();
+            _uiFactory.CreateCoinsPanel();
         }
     }
 }

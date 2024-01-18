@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using StaticData;
 using Zenject;
 
 namespace Infrastructure.StateMachine
@@ -28,10 +29,10 @@ namespace Infrastructure.StateMachine
             state.Enter(); 
         }
 
-        public void Enter<TState, TPayLoad>(TPayLoad payLoad) where TState : class, IPayLoadState<TPayLoad>
+        public void Enter<TState, TPayLoad, NPayLoad>(TPayLoad payLoad, NPayLoad otherPayLoad) where TState : class, IPayLoadState<TPayLoad, NPayLoad>
         {
             var state = ChangeState<TState>();
-            state.Enter(payLoad);
+            state.Enter(payLoad, otherPayLoad);
         }
 
         private TState GetState<TState>() where TState : class, IExitableState 

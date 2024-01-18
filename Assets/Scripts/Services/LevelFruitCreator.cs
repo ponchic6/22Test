@@ -1,37 +1,62 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Factories;
 using Monobehavior;
+using StaticData;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Services
 {
     public class LevelFruitCreator : ILevelFruitCreator
     {
+        public event Action OnLastTakingFruit;
+        
         private readonly IFruitFactory _fruitFactory;
 
-        private Dictionary<Vector3Int, IFruitCollidDetector> _fruitDictionary = new Dictionary<Vector3Int, IFruitCollidDetector>();
+        private List<IFruitCollidDetector> _fruitList = new List<IFruitCollidDetector>();
+        private LevelStaticData _currentLevelStaticData;
 
         public LevelFruitCreator(IFruitFactory fruitFactory)
         {
             _fruitFactory = fruitFactory;
         }
 
-        public Dictionary<Vector3Int, IFruitCollidDetector> GetFruitDictionary() 
-            => _fruitDictionary;
+        public List<IFruitCollidDetector> FruitList
+            => _fruitList;
+        public LevelStaticData CurrentLevelStaticData 
+            => _currentLevelStaticData;
 
-        public void InitializeFruitsOnLevel()
+        public void InitializeFruitsOnLevel(LevelStaticData levelStaticData)
         {
-            for (int i = 0; i < 3; i++)
+            _currentLevelStaticData = levelStaticData;
+            
+            for (int i = 0; i < levelStaticData.FruitsPos.Count; i++)
             {
-                Vector3Int vector3Int = new Vector3Int(2 + 2 * i, 0, 2 + 2 * i);
-                IFruitCollidDetector fruit = _fruitFactory.CreateFruit(vector3Int);
-                _fruitDictionary.Add(vector3Int, fruit);
+                IFruitCollidDetector fruit = _fruitFactory.CreateFruit(levelStaticData.FruitsPos[i], levelStaticData.FruitsEnums[i]);
+                fruit.OnCollision += RemoveFruitFromList;
+                _fruitList.Add(fruit);
             }
         }
 
-        public void ClearDictionary()
+        public void ClearLevel()
         {
-            _fruitDictionary.Clear();
+            foreach (var fruit in _fruitList)
+            {
+                Object.Destroy(fruit.GetFruitTransform().gameObject);
+            }
+            
+            _fruitList.Clear();
+        }
+
+        private void RemoveFruitFromList(GameObject fruit)
+        {
+            _fruitList.Remove(fruit.GetComponent<IFruitCollidDetector>());
+
+            if (_fruitList.Count == 0)
+            {
+                OnLastTakingFruit?.Invoke();
+            }
         }
     }
 }

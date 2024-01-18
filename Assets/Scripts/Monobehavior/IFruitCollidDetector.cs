@@ -6,6 +6,7 @@ namespace Monobehavior
     public interface IFruitCollidDetector
     {
         public event Action<GameObject> OnCollision;
-        public void SetFruitPos(Vector3Int vector3Int); 
+        public void SetFruitPos(Vector3Int vector3Int);
+        public Transform GetFruitTransform();
     }
 }

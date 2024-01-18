@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Monobehavior
 {
-    public class FruitProgressIncreaser : MonoBehaviour
+    public class FruitProgressIncreaser : MonoBehaviour, IFruitProgressIncreaser
     {
         [SerializeField] private TMP_Text _text;
         private int _maxFruitsCount;
@@ -16,8 +16,13 @@ namespace Monobehavior
         public void Constructor(ILevelFruitCreator levelFruitCreator)
         {
             _levelFruitCreator = levelFruitCreator;
-
             SubscribeOnCollision();
+        }
+
+        public void SetFruitLimit(int limit)
+        {
+            _maxFruitsCount = limit;
+            _text.text = 0 + "/" + _maxFruitsCount;
         }
 
         private void IncreaseFruitScore(GameObject fruit)
@@ -28,9 +33,9 @@ namespace Monobehavior
 
         private void SubscribeOnCollision()
         {
-            foreach (var keyValuePair in _levelFruitCreator.GetFruitDictionary())
+            foreach (var fruit in _levelFruitCreator.FruitList)
             {
-                keyValuePair.Value.OnCollision += IncreaseFruitScore;
+                fruit.OnCollision += IncreaseFruitScore;
             }
         }
     }

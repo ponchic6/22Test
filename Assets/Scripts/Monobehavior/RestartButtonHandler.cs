@@ -11,20 +11,20 @@ namespace Monobehavior
     {
         [Inject] private ITractorFactory _tractorFactory;
         [Inject] private ILevelFruitCreator _levelFruitCreator;
-        [Inject] private ILossHandler _lossHandler;
-    
+        [Inject] private IBonusService _bonusService;
+
         private GameStateMachine _gameStateMachine;
 
-        public void Constructor(GameStateMachine gameStateMachine)
+        public void SetGameStateMachine(GameStateMachine gameStateMachine)
         {
             _gameStateMachine = gameStateMachine;
         }
 
         public void RestartGame()
-        {   
-            _levelFruitCreator.ClearDictionary();
+        {
+            _bonusService.ClearBonusList();
+            _levelFruitCreator.ClearLevel();
             _tractorFactory.DestroyTractor();
-            _lossHandler.UpdateLossStatus();
             _gameStateMachine.Enter<LoadMainMenuState>(); 
         }
     }

@@ -1,9 +1,8 @@
 ﻿namespace Handlers
 {
-    public interface ILossHandler
+    public interface IWinLossHandler
     {
         public void SubscribeOnTimeOver();
         public void SubscribeOnIncorrectChooseOfBasket();
-        public void UpdateLossStatus();
     }
 }

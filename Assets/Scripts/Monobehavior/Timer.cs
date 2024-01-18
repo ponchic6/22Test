@@ -7,10 +7,13 @@ namespace Monobehavior
     public class Timer : MonoBehaviour, ITimer
     {
         public event Action OnTimeOver;
-    
+
         [SerializeField] private float _maxTime;
+
         [SerializeField] private TMP_Text _timerText;
+
         private float _timer;
+
         private bool _isTimerOver;
 
         private void Awake()
@@ -29,8 +32,13 @@ namespace Monobehavior
             else
             {
                 OnTimeOver?.Invoke();
-                gameObject.SetActive(false);
+                DisableTimer();
             }
+        }
+
+        public void DisableTimer()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

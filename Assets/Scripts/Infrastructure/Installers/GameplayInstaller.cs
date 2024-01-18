@@ -1,21 +1,46 @@
+using System.Collections.Generic;
 using Factories;
 using Handlers;
 using Services;
+using StaticData;
 using UnityEngine;
 using Zenject;
 
 public class GameplayInstaller : MonoInstaller
 {
+    [SerializeField] private List<LevelStaticData> _levelConfigsList;
     public override void InstallBindings()
     {
         RegisterTickService();
         RegisterInputService();
         RegisterTractorFactories();
         RegisterUIHandlerFactory();
+        RegisterStaticData();
         RegisterUIFactory();
-        RegisterLossHandler();
+        RegisterCoinsService();
         RegisterFruitFactory();
         RegisterLevelFruitCreator();
+        RegisterWinLossHandler();
+        RegisterBonusService();
+    }
+
+    private void RegisterBonusService()
+    {
+        IBonusService bonusService = Container.Instantiate<BonusService>();
+        Container.Bind<IBonusService>().FromInstance(bonusService).AsSingle();
+    }
+
+    private void RegisterCoinsService()
+    {
+        ICoinsService coinsService = Container.Instantiate<CoinsService>();
+        Container.Bind<ICoinsService>().FromInstance(coinsService).AsSingle();
+    }
+
+    private void RegisterStaticData()
+    {
+        ILevelStaticDataService levelStaticDataService = Container.Instantiate<LevelStaticDataService>();
+        levelStaticDataService.FillConfigLevelList(_levelConfigsList);
+        Container.Bind<ILevelStaticDataService>().FromInstance(levelStaticDataService).AsSingle();
     }
 
     private void RegisterUIHandlerFactory()
@@ -36,10 +61,10 @@ public class GameplayInstaller : MonoInstaller
         Container.Bind<IFruitFactory>().FromInstance(fruitFactory).AsSingle();
     }
 
-    private void RegisterLossHandler()
+    private void RegisterWinLossHandler()
     {
-        ILossHandler lossHandler = Container.Instantiate<LossHandler>();
-        Container.Bind<ILossHandler>().FromInstance(lossHandler).AsSingle();
+        IWinLossHandler winLossHandler = Container.Instantiate<WinLossHandler>();
+        Container.Bind<IWinLossHandler>().FromInstance(winLossHandler).AsSingle();
     }
 
     private void RegisterUIFactory()

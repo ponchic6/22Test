@@ -25,9 +25,9 @@ namespace Monobehavior
     
         private void SubscribeOnCollisionWithFruit()
         {
-            foreach (var fruitKetValuePair in _levelFruitCreator.GetFruitDictionary())
+            foreach (var fruit in _levelFruitCreator.FruitList)
             {
-                fruitKetValuePair.Value.OnCollision += CheckCorrectBasket;
+                fruit.OnCollision += CheckCorrectBasket;
             }
         }
 

@@ -17,5 +17,10 @@ namespace Monobehavior
         {
             transform.position = vector3Int;
         }
+        
+        public Transform GetFruitTransform()
+        {
+            return transform;
+        }
     }
 }
