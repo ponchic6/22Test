@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace Monobehavior
+namespace Monobehavior.View
 {
     public class Timer : MonoBehaviour, ITimer
     {

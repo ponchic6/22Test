@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Services
 {
-    public class LevelStaticDataService : ILevelStaticDataService
+    public class LevelsStaticDataService : ILevelsStaticDataService
     {
         private List<LevelStaticData> _levelConfigsList;
         

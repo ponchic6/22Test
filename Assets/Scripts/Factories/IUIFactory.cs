@@ -1,4 +1,6 @@
 ﻿using Infrastructure.StateMachine;
+using Services;
+using StaticData;
 using UnityEngine;
 
 namespace Factories
@@ -12,7 +14,7 @@ namespace Factories
         public void CreateFruitProgrerss(int fruitsPosCount);
         public void CreateFruitButtons();
         public void CreateLossDisplay();
-        public void CreateMenuPanel();
+        public void CreateMenuPanel(ILevelsStaticDataService levelsStaticDataService);
         public void CreateCoinsPanel();
         public void CreateBonusPanel();
         public Transform RootCanvas { get; }

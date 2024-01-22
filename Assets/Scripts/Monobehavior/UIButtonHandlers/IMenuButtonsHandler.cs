@@ -1,7 +1,7 @@
 ﻿using Infrastructure.StateMachine;
 using StaticData;
 
-namespace Monobehavior
+namespace Monobehavior.UIButtonHandlers
 {
     public interface IMenuButtonsHandler
     {

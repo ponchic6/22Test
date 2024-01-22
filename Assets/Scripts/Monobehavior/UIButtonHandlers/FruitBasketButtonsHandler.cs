@@ -1,7 +1,7 @@
 ﻿using Enums;
 using UnityEngine;
 
-namespace Monobehavior
+namespace Monobehavior.UIButtonHandlers
 {
     public class FruitBasketButtonsHandler : MonoBehaviour, IFruitBasketButtonsHandler
     {

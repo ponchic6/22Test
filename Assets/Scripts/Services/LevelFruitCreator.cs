@@ -10,8 +10,6 @@ namespace Services
 {
     public class LevelFruitCreator : ILevelFruitCreator
     {
-        public event Action OnLastTakingFruit;
-        
         private readonly IFruitFactory _fruitFactory;
 
         private List<IFruitCollidDetector> _fruitList = new List<IFruitCollidDetector>();
@@ -52,11 +50,6 @@ namespace Services
         private void RemoveFruitFromList(GameObject fruit)
         {
             _fruitList.Remove(fruit.GetComponent<IFruitCollidDetector>());
-
-            if (_fruitList.Count == 0)
-            {
-                OnLastTakingFruit?.Invoke();
-            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Monobehavior
+﻿namespace Monobehavior.View
 {
     public interface IFruitProgressIncreaser
     {

@@ -9,19 +9,27 @@ using Zenject;
 public class GameplayInstaller : MonoInstaller
 {
     [SerializeField] private List<LevelStaticData> _levelConfigsList;
+    [SerializeField] private CoinsStaticData _coinsStaticData;
+
     public override void InstallBindings()
     {
         RegisterTickService();
         RegisterInputService();
         RegisterTractorFactories();
         RegisterUIHandlerFactory();
-        RegisterStaticData();
+        RegisterLevelStaticData();
         RegisterUIFactory();
+        RegisterCoinsStaticData();
         RegisterCoinsService();
         RegisterFruitFactory();
         RegisterLevelFruitCreator();
         RegisterWinLossHandler();
         RegisterBonusService();
+    }
+
+    private void RegisterCoinsStaticData()
+    {
+        Container.Bind<CoinsStaticData>().FromInstance(_coinsStaticData).AsSingle();
     }
 
     private void RegisterBonusService()
@@ -36,11 +44,11 @@ public class GameplayInstaller : MonoInstaller
         Container.Bind<ICoinsService>().FromInstance(coinsService).AsSingle();
     }
 
-    private void RegisterStaticData()
+    private void RegisterLevelStaticData()
     {
-        ILevelStaticDataService levelStaticDataService = Container.Instantiate<LevelStaticDataService>();
-        levelStaticDataService.FillConfigLevelList(_levelConfigsList);
-        Container.Bind<ILevelStaticDataService>().FromInstance(levelStaticDataService).AsSingle();
+        ILevelsStaticDataService levelsStaticDataService = Container.Instantiate<LevelsStaticDataService>();
+        levelsStaticDataService.FillConfigLevelList(_levelConfigsList);
+        Container.Bind<ILevelsStaticDataService>().FromInstance(levelsStaticDataService).AsSingle();
     }
 
     private void RegisterUIHandlerFactory()

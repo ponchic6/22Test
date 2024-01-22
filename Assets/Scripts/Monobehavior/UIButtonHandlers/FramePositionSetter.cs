@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Monobehavior
+namespace Monobehavior.UIButtonHandlers
 {
     public class FramePositionSetter : MonoBehaviour
     {

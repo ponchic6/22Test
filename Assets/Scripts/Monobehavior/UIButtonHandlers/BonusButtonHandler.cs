@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using Zenject;
 
-namespace Monobehavior
+namespace Monobehavior.UIButtonHandlers
 {
     public class BonusButtonHandler : MonoBehaviour
     {

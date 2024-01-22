@@ -1,11 +1,10 @@
 ﻿using Factories;
-using Handlers;
 using Infrastructure.StateMachine;
 using Services;
 using UnityEngine;
 using Zenject;
 
-namespace Monobehavior
+namespace Monobehavior.UIButtonHandlers
 {
     public class RestartButtonHandler : MonoBehaviour, IRestartButtonHandler
     {

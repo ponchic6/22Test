@@ -1,6 +1,10 @@
-﻿using Infrastructure.StateMachine;
+﻿using System.Collections.Generic;
+using Infrastructure.StateMachine;
 using Monobehavior;
+using Monobehavior.UIButtonHandlers;
+using Monobehavior.View;
 using Services;
+using StaticData;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,10 +23,11 @@ namespace Factories
         private const string MenuPanelPath = "UIEllements/UIPrefabs/MenuPanel";
         private const string CoinsPanelPath = "UIEllements/UIPrefabs/CoinsPanel";
         private const string BonusPanelPath = "UIEllements/UIPrefabs/Bonus";
+        private const string LevelButtonsPairPath = "UIEllements/UIPrefabs/LevelButtonsPair";
 
         private readonly DiContainer _diContainer;
         private readonly IUIHandlerFactory _uiHandlerFactory;
-        private readonly ILevelStaticDataService _levelStaticDataService;
+        private readonly ILevelsStaticDataService _levelsStaticDataService;
 
         private IMenuButtonsHandler _menuButtonsHandler;
         private IFruitBasketButtonsHandler _fruitBasketButtonsHandler;
@@ -38,7 +43,7 @@ namespace Factories
         private Transform _menuPanel;
         private Transform _coinsPanel;
         private GameStateMachine _gameStateMachine;
-        
+
         public Transform RootCanvas => _rootCanvas;
         public Transform CurrentLevelText => _currentLevelText;
         public Transform Timer => _timer;
@@ -49,11 +54,11 @@ namespace Factories
         public Transform CoinsPanel => _coinsPanel;
 
 
-        public UIFactory(DiContainer diContainer, IUIHandlerFactory uiHandlerFactory, ILevelStaticDataService levelStaticDataService)
+        public UIFactory(DiContainer diContainer, IUIHandlerFactory uiHandlerFactory, ILevelsStaticDataService levelsStaticDataService)
         {    
             _diContainer = diContainer;         
             _uiHandlerFactory = uiHandlerFactory;
-            _levelStaticDataService = levelStaticDataService;
+            _levelsStaticDataService = levelsStaticDataService;
         }
 
         public void SetGameStateMachine(GameStateMachine gameStateMachine)
@@ -103,13 +108,20 @@ namespace Factories
             BindRestartButton(_lossDisplay.GetChild(0).GetChild(0));
         }
 
-        public void CreateMenuPanel()
+        public void CreateMenuPanel(ILevelsStaticDataService levelsStaticDataService)
         {
             _menuPanel = _diContainer.InstantiatePrefabResource(MenuPanelPath, _rootCanvas).transform;
             _menuButtonsHandler = _uiHandlerFactory.CreateMenuButtonsHandler(_menuPanel, _gameStateMachine);
-            BindMenuButton(_menuPanel.GetChild(0),_menuPanel.GetChild(3), "Level 1", 0);
-            BindMenuButton(_menuPanel.GetChild(1), _menuPanel.GetChild(4), "Level 2", 1);
-            BindMenuButton(_menuPanel.GetChild(2), _menuPanel.GetChild(5), "Level 3", 2);
+
+            for (int i = 0; i < levelsStaticDataService.LevelConfigsList.Count; i++)
+            {
+                Transform levelButtonsPair = _diContainer.InstantiatePrefabResource(LevelButtonsPairPath, _menuPanel).transform;
+                LevelStaticData currentLevelStaticData = levelsStaticDataService.LevelConfigsList[i];
+                
+                SetLevelButtonsView(levelButtonsPair, i, currentLevelStaticData);
+                BindMenuButton(levelButtonsPair.GetChild(0), levelButtonsPair.GetChild(1),
+                    currentLevelStaticData.LevelName, i);
+            }
         }
 
         public void CreateCoinsPanel()
@@ -125,25 +137,28 @@ namespace Factories
             BindRestartButton(_bonusPanel.GetChild(1));
         }
 
+        private static void SetLevelButtonsView(Transform levelButtonsPair, int LevelNumber,
+            LevelStaticData currentLevelStaticData)
+        {
+            levelButtonsPair.position += new Vector3(0, -100, 0) * LevelNumber;
+
+            levelButtonsPair.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text =
+                currentLevelStaticData.LevelName;
+
+            levelButtonsPair.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text =
+                currentLevelStaticData.CostForLevel.ToString();
+        }
+
         private void BindMenuButton(Transform levelMenuButton, Transform unblockButton, string levelName, int levelIndex)
         {
             levelMenuButton
                 .GetComponent<Button>()
                 .onClick
-                .AddListener(() => { _menuButtonsHandler.LoadLevel(levelName, _levelStaticDataService.LevelConfigsList[levelIndex]); });
+                .AddListener(() => { _menuButtonsHandler.LoadLevel(levelName, _levelsStaticDataService.LevelConfigsList[levelIndex]); });
             
-            unblockButton.GetComponent<ILevelButtonUnblocker>().SetLevelStaticData(_levelStaticDataService.LevelConfigsList[levelIndex]);
+            unblockButton.GetComponent<ILevelButtonUnblocker>().SetLevelStaticData(_levelsStaticDataService.LevelConfigsList[levelIndex]);
 
-            if (!_levelStaticDataService.LevelConfigsList[levelIndex].IsLevelUnblock)
-            {
-                levelMenuButton.GetComponent<Button>().interactable = false;
-                unblockButton.GetComponent<Button>().interactable = true;
-            }
-
-            else
-            {
-                unblockButton.GetComponent<Button>().interactable = false;
-            }
+            SetBlockStatusButton(levelMenuButton, unblockButton, levelIndex);
         }
 
         private void BindFruitButton(Transform fruitButton)
@@ -160,6 +175,20 @@ namespace Factories
                 .GetComponent<Button>()
                 .onClick
                 .AddListener(() => { _restartButtonHandler.RestartGame(); });
+        }
+
+        private void SetBlockStatusButton(Transform levelMenuButton, Transform unblockButton, int levelIndex)
+        {
+            if (!_levelsStaticDataService.LevelConfigsList[levelIndex].IsLevelUnblock)
+            {
+                levelMenuButton.GetComponent<Button>().interactable = false;
+                unblockButton.GetComponent<Button>().interactable = true;
+            }
+
+            else
+            {
+                unblockButton.GetComponent<Button>().interactable = false;
+            }
         }
     }
 }

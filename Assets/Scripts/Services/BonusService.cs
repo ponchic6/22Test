@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Monobehavior;
+using StaticData;
 
 namespace Services
 {
@@ -11,12 +12,14 @@ namespace Services
         private const int _maxBonusButton = 3;
 
         private readonly ICoinsService _coinsService;
+        private readonly CoinsStaticData _coinsStaticData;
 
         private List<BonusEnum> _openedButtonBonusList = new List<BonusEnum>();
 
-        public BonusService(ICoinsService coinsService)
+        public BonusService(ICoinsService coinsService, CoinsStaticData coinsStaticData)
         {
             _coinsService = coinsService;
+            _coinsStaticData = coinsStaticData;
         }
 
         public void OpenBonusButton(BonusEnum bonusEnum)
@@ -36,7 +39,7 @@ namespace Services
                     }
                 }
                 
-                _coinsService.AddCoins(100);
+                _coinsService.AddCoins(_coinsStaticData.BonusReward);
             }
         }
 

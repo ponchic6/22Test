@@ -17,5 +17,7 @@ MonoBehaviour:
   - {x: 5, y: 0, z: 5}
   - {x: 1, y: 0, z: 1}
   _fruitsEnums: 000000000000000000000000
-  _levelName: Level2
+  _levelName: Level 2
+  _rewardForLevel: 50
+  _costForLevel: 15
   IsLevelUnblock: 0

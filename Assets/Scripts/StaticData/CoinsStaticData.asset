@@ -9,13 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 835d1860d902432faf84d25b0f483917, type: 3}
-  m_Name: LevelStaticData3
+  m_Script: {fileID: 11500000, guid: d13bf53902fe451ebc6d2692e35f2650, type: 3}
+  m_Name: CoinsStaticData
   m_EditorClassIdentifier: 
-  _fruitPos:
-  - {x: 0, y: 0, z: 7}
-  _fruitsEnums: 00000000
-  _levelName: Level 3
-  _rewardForLevel: 100
-  _costForLevel: 30
-  IsLevelUnblock: 0
+  _bonusReward: 4
+  CurrentCoins: 10

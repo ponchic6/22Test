@@ -1,10 +1,10 @@
 ﻿using StaticData;
 
-namespace Monobehavior
+namespace Monobehavior.UIButtonHandlers
 {
     public interface ILevelButtonUnblocker
     {
-        public void UnblockLevelButton();
+        public void TryUnblockLevelButton();
         public void SetLevelStaticData(LevelStaticData levelStaticData);
     }
 }

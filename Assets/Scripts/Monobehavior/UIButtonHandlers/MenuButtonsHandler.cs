@@ -2,7 +2,7 @@
 using StaticData;
 using UnityEngine;
 
-namespace Monobehavior
+namespace Monobehavior.UIButtonHandlers
 {
     public class MenuButtonsHandler : MonoBehaviour, IMenuButtonsHandler
     {

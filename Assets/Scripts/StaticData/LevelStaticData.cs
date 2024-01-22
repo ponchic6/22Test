@@ -11,11 +11,13 @@ namespace StaticData
         [SerializeField] private List<FruitsEnum> _fruitsEnums;
         [SerializeField] private string _levelName;
         [SerializeField] private int _rewardForLevel;
+        [SerializeField] private int _costForLevel;
 
         public int RewardForLevel => _rewardForLevel;
         public List<Vector3Int> FruitsPos => _fruitPos;
         public List<FruitsEnum> FruitsEnums => _fruitsEnums;
         public string LevelName => _levelName;
+        public int CostForLevel => _costForLevel;
         public bool IsLevelUnblock;
     }
 }

@@ -37,17 +37,29 @@ namespace Services
             if (_canSwipe && Vector3.Distance(Input.mousePosition, _startMousePos) > Eps)
             {
                 _canSwipe = false;
-                Vector3 direction = Input.mousePosition - _startMousePos;
+                
+                Camera camera = Camera.main;
+                Ray startRay = camera.ScreenPointToRay(_startMousePos);
+                Ray endRay = camera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit raycastHitStart;
+                RaycastHit raycastHitEnd;
+
+                Vector3 direction = new Vector3();
+
+                if (Physics.Raycast(startRay, out raycastHitStart, Mathf.Infinity, 1 << 6) &&
+                    Physics.Raycast(endRay, out raycastHitEnd, Mathf.Infinity, 1 << 6))
+                {
+                    direction = raycastHitEnd.point - raycastHitStart.point;
+                }
 
                 direction = ToRoundVector3(direction);
-                
                 OnSwipe?.Invoke(direction);
             }
         }
 
         private Vector3 ToRoundVector3(Vector3 direction)
         {
-            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
             {
                 if (direction.x > 0)
                 {
@@ -62,7 +74,7 @@ namespace Services
 
             else
             {
-                if (direction.y > 0)
+                if (direction.z > 0)
                 {
                     direction = Vector3.forward;
                 }

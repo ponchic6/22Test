@@ -1,5 +1,6 @@
 ﻿using Factories;
 using Monobehavior;
+using Monobehavior.View;
 using Services;
 using UnityEngine;
 
@@ -19,7 +20,6 @@ namespace Handlers
             _tractorFactory = tractorFactory;
             _levelFruitCreator = levelFruitCreator;
             _coinsService = coinsService;
-            _levelFruitCreator.OnLastTakingFruit += ToWin;
         }
 
         public void SubscribeOnTimeOver()
@@ -29,13 +29,22 @@ namespace Handlers
 
         public void SubscribeOnIncorrectChooseOfBasket()
         {
-            _tractorFactory.GetTractor().GetComponent<IFruitChecker>().OnCheckFruitType += TryToLose;
+            _tractorFactory.GetTractor().GetComponent<IFruitChecker>().OnCheckFruitType += TryToSetTheWinStatus;
         }
         
-        private void TryToLose(bool obj)
+        private void TryToSetTheWinStatus(bool isFruitMatched)
         {
-            if (obj == false)
+            if (isFruitMatched)
+            {
+                if (_levelFruitCreator.FruitList.Count == 0) 
+                    ToWin();
+            }
+
+            else
+            {
                 ToLose();
+            }
+                
         }
 
         private void ToWin()

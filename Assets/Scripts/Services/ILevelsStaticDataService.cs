@@ -3,7 +3,7 @@ using StaticData;
 
 namespace Services
 {
-    public interface ILevelStaticDataService
+    public interface ILevelsStaticDataService
     {
         public void FillConfigLevelList(List<LevelStaticData> list);
         public List<LevelStaticData> LevelConfigsList { get; }

@@ -1,6 +1,6 @@
 ﻿using Infrastructure.StateMachine;
 
-namespace Monobehavior
+namespace Monobehavior.UIButtonHandlers
 {
     public interface IRestartButtonHandler
     {
