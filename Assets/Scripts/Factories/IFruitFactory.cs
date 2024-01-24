@@ -1,5 +1,6 @@
 ﻿using Enums;
 using Monobehavior;
+using Monobehavior.Fruits;
 using UnityEngine;
 
 namespace Factories

@@ -5,7 +5,7 @@ using Services;
 using UnityEngine;
 using Zenject;
 
-namespace Monobehavior
+namespace Monobehavior.Fruits
 {
     public class FruitChecker : MonoBehaviour, IFruitChecker
     {

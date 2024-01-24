@@ -594,9 +594,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5837824322099897449}
-  - component: {fileID: -1522668601101231211}
   - component: {fileID: 1485489050182810814}
   - component: {fileID: 7816195492070241447}
+  - component: {fileID: 9216491034240511613}
+  - component: {fileID: 7625435172713811584}
   m_Layer: 0
   m_Name: TractorPrefab
   m_TagString: Untagged
@@ -620,18 +621,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1522668601101231211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3111969978983494217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3259142a8d2f466a92befb3ff1a0b3fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1485489050182810814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,3 +646,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af8d296598738d45ab283c9b0dee9b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9216491034240511613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3111969978983494217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3259142a8d2f466a92befb3ff1a0b3fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7625435172713811584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3111969978983494217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ddc69b87714c998bbffa4cdb82b556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tractorMover: {fileID: 1485489050182810814}
+  _tractorDirectionChanger: {fileID: 9216491034240511613}

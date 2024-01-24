@@ -1,6 +1,7 @@
 ﻿using Factories;
 using Monobehavior;
-using Monobehavior.View;
+using Monobehavior.Fruits;
+using Monobehavior.UIView;
 using Services;
 using UnityEngine;
 
@@ -51,14 +52,14 @@ namespace Handlers
         {
             _coinsService.AddCoins(_levelFruitCreator.CurrentLevelStaticData.RewardForLevel);
             _uiFactory.Timer.GetComponent<ITimer>().DisableTimer();
-            _tractorFactory.DestroyTractor();
+            _tractorFactory.GetTractor().GetComponent<ITractorMoveDisabler>().DisableMove();
             _uiFactory.CreateBonusPanel();
         }
 
         private void ToLose()
         {
             _uiFactory.Timer.GetComponent<ITimer>().DisableTimer();
-            _tractorFactory.DestroyTractor();
+            _tractorFactory.GetTractor().GetComponent<ITractorMoveDisabler>().DisableMove();
             _uiFactory.CreateLossDisplay();
         }
     }

@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using Zenject;
 
-namespace Monobehavior.View
+namespace Monobehavior.UIView
 {
     public class CoinsView : MonoBehaviour
     {

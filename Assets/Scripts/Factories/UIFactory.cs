@@ -2,7 +2,7 @@
 using Infrastructure.StateMachine;
 using Monobehavior;
 using Monobehavior.UIButtonHandlers;
-using Monobehavior.View;
+using Monobehavior.UIView;
 using Services;
 using StaticData;
 using TMPro;
@@ -79,10 +79,11 @@ namespace Factories
             _currentLevelText.GetComponent<TMP_Text>().text = levelName;
         }
 
-        public void CreateTimer()
+        public void CreateTimer(int seconds)
         {
             Transform timer = Resources.Load<GameObject>(TimerPath).transform;
             _timer = Object.Instantiate(timer, _rootCanvas);
+            _timer.GetComponent<ITimer>().SetTimer(seconds);
         }
 
         public void CreateFruitProgrerss(int fruitsPosCount)

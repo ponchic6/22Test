@@ -10,7 +10,7 @@ namespace Factories
         public void SetGameStateMachine(GameStateMachine gameStateMachine);
         public void CreateCanvas();
         public void CreateCurrentLevelText(string levelName);
-        public void CreateTimer();
+        public void CreateTimer(int seconds);
         public void CreateFruitProgrerss(int fruitsPosCount);
         public void CreateFruitButtons();
         public void CreateLossDisplay();

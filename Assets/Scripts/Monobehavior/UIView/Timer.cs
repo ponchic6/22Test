@@ -2,25 +2,18 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace Monobehavior.View
+namespace Monobehavior.UIView
 {
     public class Timer : MonoBehaviour, ITimer
     {
         public event Action OnTimeOver;
-
-        [SerializeField] private float _maxTime;
-
+        
         [SerializeField] private TMP_Text _timerText;
 
         private float _timer;
 
         private bool _isTimerOver;
-
-        private void Awake()
-        {
-            _timer = _maxTime;
-        }
-
+        
         private void Update()
         {
             if (_timer > 0)
@@ -39,6 +32,11 @@ namespace Monobehavior.View
         public void DisableTimer()
         {
             gameObject.SetActive(false);
+        }
+
+        public void SetTimer(int seconds)
+        {
+            _timer = seconds;
         }
     }
 }

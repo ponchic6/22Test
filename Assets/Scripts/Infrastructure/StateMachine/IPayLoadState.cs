@@ -1,7 +1,7 @@
 ﻿namespace Infrastructure.StateMachine
 {
-    public interface IPayLoadState<TPayLoad, NPayLoad> : IExitableState
+    public interface IPayLoadState<TPayLoad> : IExitableState
     {
-        public void Enter(TPayLoad payLoad, NPayLoad otherPayLoad);
+        public void Enter(TPayLoad payLoad);
     }
 }

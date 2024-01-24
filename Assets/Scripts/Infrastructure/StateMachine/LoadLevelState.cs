@@ -6,8 +6,10 @@ using Zenject;
 
 namespace Infrastructure.StateMachine
 {
-    public class LoadLevelState : IPayLoadState<string, LevelStaticData>
+    public class LoadLevelState : IPayLoadState<LevelStaticData>
     {
+        private const string GameplaySceneName = "GameplayLevel";
+        
         private readonly SceneLoader _sceneLoader;
 
         [Inject] private ITractorFactory _tractorFactory;
@@ -22,10 +24,10 @@ namespace Infrastructure.StateMachine
             _sceneLoader = sceneLoader;
         }
 
-        public void Enter(string sceneName, LevelStaticData levelStaticData)
+        public void Enter(LevelStaticData levelStaticData)
         {
             _levelStaticData = levelStaticData;
-            _sceneLoader.Load(sceneName, OnLoaded);
+            _sceneLoader.Load(GameplaySceneName, OnLoaded);
         }
 
         public void Exit()
@@ -38,7 +40,7 @@ namespace Infrastructure.StateMachine
             _levelFruitCreator.InitializeFruitsOnLevel(_levelStaticData);
             _tractorFactory.CreateTractor();
             _uiFactory.CreateCanvas();
-            _uiFactory.CreateTimer();
+            _uiFactory.CreateTimer(_levelStaticData.Timer);
             _uiFactory.CreateFruitProgrerss(_levelStaticData.FruitsPos.Count);
             _uiFactory.CreateCurrentLevelText(_levelStaticData.LevelName);
             _uiFactory.CreateFruitButtons();

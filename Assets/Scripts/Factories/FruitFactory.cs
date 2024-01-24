@@ -1,5 +1,6 @@
 ﻿using Enums;
 using Monobehavior;
+using Monobehavior.Fruits;
 using UnityEngine;
 using Zenject;
 
@@ -8,7 +9,7 @@ namespace Factories
     public class FruitFactory : IFruitFactory
     {   
         private const string ApplePath = "Fruits/Apple";
-        private const string TomatoPath = "Fruits/Tomatos";
+        private const string TomatoPath = "Fruits/Tomato";
     
         private readonly DiContainer _diContainer;
 

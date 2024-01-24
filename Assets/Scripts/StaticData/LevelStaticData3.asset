@@ -18,4 +18,5 @@ MonoBehaviour:
   _levelName: Level 3
   _rewardForLevel: 100
   _costForLevel: 30
+  _timer: 20
   IsLevelUnblock: 0

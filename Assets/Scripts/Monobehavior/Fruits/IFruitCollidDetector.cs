@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Monobehavior
+namespace Monobehavior.Fruits
 {
     public interface IFruitCollidDetector
     {

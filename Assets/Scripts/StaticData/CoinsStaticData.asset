@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d13bf53902fe451ebc6d2692e35f2650, type: 3}
   m_Name: CoinsStaticData
   m_EditorClassIdentifier: 
-  _bonusReward: 4
-  CurrentCoins: 10
+  _bonusReward: 5
+  CurrentCoins: 20

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Monobehavior;
+using Monobehavior.Fruits;
 using StaticData;
 using UnityEngine;
 

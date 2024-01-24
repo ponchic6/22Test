@@ -29,10 +29,10 @@ namespace Infrastructure.StateMachine
             state.Enter(); 
         }
 
-        public void Enter<TState, TPayLoad, NPayLoad>(TPayLoad payLoad, NPayLoad otherPayLoad) where TState : class, IPayLoadState<TPayLoad, NPayLoad>
+        public void Enter<TState, TPayLoad>(TPayLoad payLoad) where TState : class, IPayLoadState<TPayLoad>
         {
             var state = ChangeState<TState>();
-            state.Enter(payLoad, otherPayLoad);
+            state.Enter(payLoad);
         }
 
         private TState GetState<TState>() where TState : class, IExitableState 

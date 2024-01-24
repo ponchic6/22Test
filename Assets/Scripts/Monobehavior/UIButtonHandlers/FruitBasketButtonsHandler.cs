@@ -1,4 +1,5 @@
 ﻿using Enums;
+using Monobehavior.Fruits;
 using UnityEngine;
 
 namespace Monobehavior.UIButtonHandlers

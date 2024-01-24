@@ -15,7 +15,7 @@ namespace Monobehavior.UIButtonHandlers
     
         public void LoadLevel(string levelName, LevelStaticData levelStaticData)
         {
-            _gameStateMachine.Enter<LoadLevelState, string, LevelStaticData>(levelName, levelStaticData);
+            _gameStateMachine.Enter<LoadLevelState, LevelStaticData>(levelStaticData);
         }
     }
 }

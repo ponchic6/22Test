@@ -46,8 +46,8 @@ namespace Services
 
                 Vector3 direction = new Vector3();
 
-                if (Physics.Raycast(startRay, out raycastHitStart, Mathf.Infinity, 1 << 6) &&
-                    Physics.Raycast(endRay, out raycastHitEnd, Mathf.Infinity, 1 << 6))
+                if (Physics.Raycast(startRay, out raycastHitStart, Mathf.Infinity, LayerMask.GetMask("Ground")) &&
+                    Physics.Raycast(endRay, out raycastHitEnd, Mathf.Infinity, LayerMask.GetMask("Ground")))
                 {
                     direction = raycastHitEnd.point - raycastHitStart.point;
                 }

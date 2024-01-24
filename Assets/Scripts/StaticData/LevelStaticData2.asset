@@ -20,4 +20,5 @@ MonoBehaviour:
   _levelName: Level 2
   _rewardForLevel: 50
   _costForLevel: 15
+  _timer: 20
   IsLevelUnblock: 0

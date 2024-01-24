@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Factories;
 using Monobehavior;
+using Monobehavior.Fruits;
 using StaticData;
 using UnityEngine;
 using Object = UnityEngine.Object;

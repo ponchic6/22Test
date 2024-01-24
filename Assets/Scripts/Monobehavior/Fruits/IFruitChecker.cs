@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Monobehavior
+namespace Monobehavior.Fruits
 {
     public interface IFruitChecker
     {

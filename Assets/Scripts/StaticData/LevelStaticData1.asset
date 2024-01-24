@@ -21,4 +21,5 @@ MonoBehaviour:
   _levelName: Level 1
   _rewardForLevel: 15
   _costForLevel: 5
-  IsLevelUnblock: 1
+  _timer: 20
+  IsLevelUnblock: 0
