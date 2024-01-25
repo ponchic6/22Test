@@ -79,3 +79,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eeeaa42b4cd08e547a21f0d63207ad04, type: 2}
   - {fileID: 11400000, guid: c5a340d20cd31cf468ca52c47870d930, type: 2}
   _coinsStaticData: {fileID: 11400000, guid: 59505b34ff8c37d49ab4d4b8801c7625, type: 2}
+  _pathStaticData: {fileID: 11400000, guid: 6d40b786d0b10fb4daed4824a7fc0f15, type: 2}

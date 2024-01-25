@@ -21,4 +21,5 @@ MonoBehaviour:
   _rewardForLevel: 50
   _costForLevel: 15
   _timer: 20
-  IsLevelUnblock: 0
+  countTypesOfVegetables: 2
+  IsLevelUnblock: 1

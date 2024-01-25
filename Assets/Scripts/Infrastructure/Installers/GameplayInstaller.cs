@@ -10,11 +10,13 @@ public class GameplayInstaller : MonoInstaller
 {
     [SerializeField] private List<LevelStaticData> _levelConfigsList;
     [SerializeField] private CoinsStaticData _coinsStaticData;
+    [SerializeField] private PathStaticData _pathStaticData;
 
     public override void InstallBindings()
     {
         RegisterTickService();
         RegisterInputService();
+        RegisterPathStaticData();
         RegisterTractorFactories();
         RegisterUIHandlerFactory();
         RegisterLevelStaticData();
@@ -25,6 +27,11 @@ public class GameplayInstaller : MonoInstaller
         RegisterLevelFruitCreator();
         RegisterWinLossHandler();
         RegisterBonusService();
+    }
+
+    private void RegisterPathStaticData()
+    {
+        Container.Bind<PathStaticData>().FromInstance(_pathStaticData).AsSingle();
     }
 
     private void RegisterCoinsStaticData()

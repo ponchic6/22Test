@@ -6,6 +6,8 @@ namespace Services
     public class InputService : IInputService
     {
         public event Action<Vector3> OnSwipe;
+        public event Action OnRightClockDown;
+        public event Action OnRightClockUp;
 
         private const float Eps = 10;
         
@@ -16,6 +18,24 @@ namespace Services
         {
             tickService.OnTick += CheckSwipe;
             tickService.OnTick += CheckTouch;
+            tickService.OnTick += CheckRightClickDown;
+            tickService.OnTick += CheckRightClickUp;
+        }
+
+        private void CheckRightClickUp()
+        {
+            if (Input.GetMouseButtonUp(1))
+            {
+                OnRightClockUp?.Invoke();
+            }
+        }
+
+        private void CheckRightClickDown()
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                OnRightClockDown?.Invoke();
+            }
         }
 
         private void CheckTouch()

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Infrastructure.StateMachine;
-using Monobehavior;
+﻿using Infrastructure.StateMachine;
 using Monobehavior.UIButtonHandlers;
 using Monobehavior.UIView;
 using Services;
@@ -14,20 +12,10 @@ namespace Factories
 {
     public class UIFactory : IUIFactory
     {
-        private const string CanvasPath = "UIEllements/UIPrefabs/Canvas";
-        private const string CurrentLevelTextPath = "UIEllements/UIPrefabs/CurrentLevel";
-        private const string TimerPath = "UIEllements/UIPrefabs/Timer";
-        private const string FruitProgressPath = "UIEllements/UIPrefabs/FruitProgress";
-        private const string FruitButtonsPath = "UIEllements/UIPrefabs/FruitButtons";
-        private const string LossDisplayPath = "UIEllements/UIPrefabs/LossDispalyRoot";
-        private const string MenuPanelPath = "UIEllements/UIPrefabs/MenuPanel";
-        private const string CoinsPanelPath = "UIEllements/UIPrefabs/CoinsPanel";
-        private const string BonusPanelPath = "UIEllements/UIPrefabs/Bonus";
-        private const string LevelButtonsPairPath = "UIEllements/UIPrefabs/LevelButtonsPair";
-
         private readonly DiContainer _diContainer;
         private readonly IUIHandlerFactory _uiHandlerFactory;
         private readonly ILevelsStaticDataService _levelsStaticDataService;
+        private readonly PathStaticData _pathStaticData;
 
         private IMenuButtonsHandler _menuButtonsHandler;
         private IFruitBasketButtonsHandler _fruitBasketButtonsHandler;
@@ -53,12 +41,13 @@ namespace Factories
         public Transform MenuPanel => _menuPanel;
         public Transform CoinsPanel => _coinsPanel;
 
-
-        public UIFactory(DiContainer diContainer, IUIHandlerFactory uiHandlerFactory, ILevelsStaticDataService levelsStaticDataService)
+        public UIFactory(DiContainer diContainer, IUIHandlerFactory uiHandlerFactory,
+            ILevelsStaticDataService levelsStaticDataService, PathStaticData pathStaticData)
         {    
             _diContainer = diContainer;         
             _uiHandlerFactory = uiHandlerFactory;
             _levelsStaticDataService = levelsStaticDataService;
+            _pathStaticData = pathStaticData;
         }
 
         public void SetGameStateMachine(GameStateMachine gameStateMachine)
@@ -68,34 +57,35 @@ namespace Factories
 
         public void CreateCanvas()
         {
-            Transform rootCanvas = Resources.Load<GameObject>(CanvasPath).transform;
+            Transform rootCanvas = Resources.Load<GameObject>(_pathStaticData.UIPathStaticData.CanvasPath).transform;
             _rootCanvas = Object.Instantiate(rootCanvas);
         }
 
         public void CreateCurrentLevelText(string levelName)
         {
-            Transform levelText = Resources.Load<GameObject>(CurrentLevelTextPath).transform;
+            Transform levelText = Resources.Load<GameObject>(_pathStaticData.UIPathStaticData.CurrentLevelTextPath).transform;
             _currentLevelText = Object.Instantiate(levelText, _rootCanvas);
             _currentLevelText.GetComponent<TMP_Text>().text = levelName;
         }
 
         public void CreateTimer(int seconds)
         {
-            Transform timer = Resources.Load<GameObject>(TimerPath).transform;
+            Transform timer = Resources.Load<GameObject>(_pathStaticData.UIPathStaticData.TimerPath).transform;
             _timer = Object.Instantiate(timer, _rootCanvas);
             _timer.GetComponent<ITimer>().SetTimer(seconds);
         }
 
         public void CreateFruitProgrerss(int fruitsPosCount)
         {
-            Transform fruitProgress = Resources.Load<GameObject>(FruitProgressPath).transform;
+            Transform fruitProgress = Resources.Load<GameObject>(_pathStaticData.UIPathStaticData.FruitProgressPath).transform;
             _fruitProgress = _diContainer.InstantiatePrefab(fruitProgress, _rootCanvas).transform;
             _fruitProgress.GetComponent<IFruitProgressIncreaser>().SetFruitLimit(fruitsPosCount);
         }
 
         public void CreateFruitButtons()
         {
-            _fruitButtons = _diContainer.InstantiatePrefabResource(FruitButtonsPath, _rootCanvas).transform;
+            _fruitButtons = _diContainer.
+                InstantiatePrefabResource(_pathStaticData.UIPathStaticData.FruitButtonsPath, _rootCanvas).transform;
             _fruitBasketButtonsHandler = _uiHandlerFactory.CreateFruitButtonsHandler(_fruitButtons);
             BindFruitButton(_fruitButtons.GetChild(0));
             BindFruitButton(_fruitButtons.GetChild(1));
@@ -103,7 +93,7 @@ namespace Factories
 
         public void CreateLossDisplay()
         {
-            Transform lossDisplay = Resources.Load<GameObject>(LossDisplayPath).transform;
+            Transform lossDisplay = Resources.Load<GameObject>(_pathStaticData.UIPathStaticData.LossDisplayPath).transform;
             _lossDisplay = Object.Instantiate(lossDisplay, _rootCanvas);
             _restartButtonHandler = _uiHandlerFactory.CreateRestartButtonHandler(_lossDisplay, _gameStateMachine);
             BindRestartButton(_lossDisplay.GetChild(0).GetChild(0));
@@ -111,12 +101,14 @@ namespace Factories
 
         public void CreateMenuPanel(ILevelsStaticDataService levelsStaticDataService)
         {
-            _menuPanel = _diContainer.InstantiatePrefabResource(MenuPanelPath, _rootCanvas).transform;
+            _menuPanel = _diContainer.
+                InstantiatePrefabResource(_pathStaticData.UIPathStaticData.MenuPanelPath, _rootCanvas).transform;
             _menuButtonsHandler = _uiHandlerFactory.CreateMenuButtonsHandler(_menuPanel, _gameStateMachine);
 
             for (int i = 0; i < levelsStaticDataService.LevelConfigsList.Count; i++)
             {
-                Transform levelButtonsPair = _diContainer.InstantiatePrefabResource(LevelButtonsPairPath, _menuPanel).transform;
+                Transform levelButtonsPair = _diContainer.
+                    InstantiatePrefabResource(_pathStaticData.UIPathStaticData.LevelButtonsPairPath, _menuPanel).transform;
                 LevelStaticData currentLevelStaticData = levelsStaticDataService.LevelConfigsList[i];
                 
                 SetLevelButtonsView(levelButtonsPair, i, currentLevelStaticData);
@@ -127,13 +119,13 @@ namespace Factories
 
         public void CreateCoinsPanel()
         {
-            _coinsPanel = _diContainer.InstantiatePrefabResource(CoinsPanelPath, _rootCanvas)
+            _coinsPanel = _diContainer.InstantiatePrefabResource(_pathStaticData.UIPathStaticData.CoinsPanelPath, _rootCanvas)
                 .transform;
         }
 
         public void CreateBonusPanel()
         {
-            _bonusPanel = _diContainer.InstantiatePrefabResource(BonusPanelPath, _rootCanvas).transform;
+            _bonusPanel = _diContainer.InstantiatePrefabResource(_pathStaticData.UIPathStaticData.BonusPanelPath, _rootCanvas).transform;
             _restartButtonHandler = _uiHandlerFactory.CreateRestartButtonHandler(_bonusPanel, _gameStateMachine);
             BindRestartButton(_bonusPanel.GetChild(1));
         }

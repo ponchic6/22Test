@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Enums;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace StaticData
 {   

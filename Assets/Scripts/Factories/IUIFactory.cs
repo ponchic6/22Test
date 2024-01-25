@@ -1,6 +1,5 @@
 ﻿using Infrastructure.StateMachine;
 using Services;
-using StaticData;
 using UnityEngine;
 
 namespace Factories
